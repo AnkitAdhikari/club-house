@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title><%= pageTitle %></title>
+  </head>
+  <body>
+    <header><%- include('partials/nav') %></header>
+    <h1>Welcome to Club House<%= user?', ' + user.first_name:'' %></h1>
+    <div class="messages">
+      <% for(let message of messages){ %>
+      <div class="message">
+        <h2 class="message-title"><%= message.title %></h2>
+        <p class="message-text"><%= message.message %></p>
+
+        <% if(user?.is_member || user?.is_admin){ %>
+        <p class="author-timestamp-container">
+          <%= message.author %> <%= message.timestamp %>
+        </p>
+        <% } %> <% if(user?.is_admin){%>
+        <form action="/<%=message.id%>?_method=DELETE" method="post">
+          <button type="submit">Delete</button>
+        </form>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </body>
+</html>

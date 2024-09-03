@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title><%= pageTitle %></title>
+  </head>
+  <body>
+    <%- include('partials/nav') %>
+    <form action="/signup" method="post">
+      <label>
+        <p>first name</p>
+        <input type="text" name="firstName" />
+      </label>
+      <label>
+        <p>last name</p>
+        <input type="text" name="lastName" />
+      </label>
+      <label>
+        <p>username</p>
+        <input type="text" name="username" />
+      </label>
+      <label>
+        <p>password</p>
+        <input type="password" name="password[]" />
+      </label>
+      <label>
+        <p>confirm password</p>
+        <input type="password" name="password[]" />
+      </label>
+      <button type="submit">sign up</button>
+    </form>
+  </body>
+</html>

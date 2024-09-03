@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title><%= pageTitle %></title>
+  </head>
+  <body>
+    <%- include("partials/nav") %>
+    <form action="/admin" method="post">
+      <label>
+        <p>Admin Code</p>
+        <input type="text" name="admincode" />
+        <button type="submit">submit</button>
+      </label>
+    </form>
+  </body>
+</html>

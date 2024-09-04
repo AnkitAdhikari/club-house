@@ -6,6 +6,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 const pool = require('./database/pool');
+const pgSession = require('connect-pg-simple')(session);
 const PORT = process.env.PORT;
 const path = require("node:path");
 const clubHouseRouter = require("./routes/clubHouseRouter");
@@ -14,7 +15,12 @@ const clubHouseRouter = require("./routes/clubHouseRouter");
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(session({ secret: process.env.session_secret, resave: false, saveUninitialized: false }));
+app.use(session({
+    store: new pgSession({
+        pool: pool,
+        tableName: 'user_sessions'
+    }), secret: process.env.session_secret, resave: false, saveUninitialized: false, cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
+}));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))

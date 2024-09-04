@@ -60,3 +60,7 @@ nav {
   flex-direction: column;
   gap: 40px;
 }
+
+.author {
+  font-weight: 600;
+}

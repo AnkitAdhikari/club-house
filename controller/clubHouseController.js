@@ -4,6 +4,7 @@ const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatu
 async function getHomePage(req, res) {
 
     const messages = await getMessages();
+    console.log(messages);
     res.render('home', { messages, pageTitle: "Home", user: req.user });
 }
 

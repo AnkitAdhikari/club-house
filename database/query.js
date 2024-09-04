@@ -41,10 +41,19 @@ async function insertNewMsg(user_id, title, message) {
     }
 }
 
+async function insertUser(firstName, lastName, username, hashedPass) {
+    try {
+        await db.query(`insert into users (first_name,last_name,username,password) values ($1,$2,$3,$4)`, [firstName, lastName, username, hashedPass]);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
 module.exports = {
     getMessages,
     deleteMessageById,
     updateMembershipStatus,
     updateAdminStatus,
-    insertNewMsg
+    insertNewMsg,
+    insertUser
 }

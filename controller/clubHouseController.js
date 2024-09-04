@@ -1,5 +1,7 @@
 const passport = require("passport");
-const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatus, insertNewMsg } = require("../database/query");
+const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatus, insertNewMsg, insertUser } = require("../database/query");
+
+const bcrypt = require('bcrypt');
 
 async function getHomePage(req, res) {
 
@@ -12,7 +14,15 @@ async function getSignUp(req, res) {
 }
 
 async function postSignUp(req, res) {
-    res.send(req.body);
+    const { firstName, lastName, username, password: [password] } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPass = bcrypt.hashSync(password, salt);
+    try {
+        await insertUser(firstName, lastName, username, hashedPass);
+        res.redirect('/');
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 async function getLogIn(req, res) {

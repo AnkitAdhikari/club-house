@@ -5,6 +5,7 @@ const app = express();
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 const pool = require('./database/pool');
 const pgSession = require('connect-pg-simple')(session);
 const PORT = process.env.PORT;
@@ -35,7 +36,7 @@ passport.use(
             if (!user) {
                 return done(null, false, { message: "Incorrect username" });
             }
-            if (user.password !== password) {
+            if (bcrypt.compareSync(user.password, password)) {
                 return done(null, false, { message: "Incorrect password" });
             }
             return done(null, user);

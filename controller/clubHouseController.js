@@ -1,11 +1,10 @@
 const passport = require("passport");
-const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatus } = require("../database/query");
+const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatus, insertNewMsg } = require("../database/query");
 
 async function getHomePage(req, res) {
 
     const messages = await getMessages();
-    console.log(messages);
-    res.render('home', { messages, pageTitle: "Home", user: req.user });
+    res.render('home', { messages, pageTitle: "Home", });
 }
 
 async function getSignUp(req, res) {
@@ -13,7 +12,6 @@ async function getSignUp(req, res) {
 }
 
 async function postSignUp(req, res) {
-    console.log(req.body);
     res.send(req.body);
 }
 
@@ -37,6 +35,10 @@ async function logOutUser(req, res) {
 
 async function getMembership(req, res) {
     res.render('membership', { pageTitle: "Membership" });
+}
+
+async function getNewMsg(req, res) {
+    res.render('newmsg', { pageTitle: 'Create Message' });
 }
 
 async function postMembership(req, res) {
@@ -86,4 +88,14 @@ async function deleteMessage(req, res) {
     }
 }
 
-module.exports = { getHomePage, deleteMessage, getSignUp, postSignUp, getLogIn, postLogIn, logOutUser, getMembership, postMembership, postAdmin, getAdmin }
+async function postNewMsg(req, res) {
+    const { title, message } = req.body;
+    try {
+        await insertNewMsg(req.user.id, title, message);
+        res.redirect('/');
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+module.exports = { getHomePage, deleteMessage, getSignUp, postSignUp, getLogIn, postLogIn, logOutUser, getMembership, postMembership, postAdmin, getAdmin, getNewMsg, postNewMsg }

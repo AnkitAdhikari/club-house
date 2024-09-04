@@ -33,9 +33,18 @@ async function updateAdminStatus(id) {
     }
 }
 
+async function insertNewMsg(user_id, title, message) {
+    try {
+        await db.query(`insert into messages (user_id,title,message) values ($1,$2,$3);`, [user_id, title, message]);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
 module.exports = {
     getMessages,
     deleteMessageById,
     updateMembershipStatus,
-    updateAdminStatus
+    updateAdminStatus,
+    insertNewMsg
 }

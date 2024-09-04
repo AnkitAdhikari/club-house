@@ -60,12 +60,6 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-app.use((req, res, next) => {
-    console.log(req.user);
-    next();
-})
-
-
 app.use('/', clubHouseRouter);
 
 app.listen(PORT, () => {

@@ -1,6 +1,12 @@
 <nav>
   <div class="navbar-brand">Club House</div>
   <ul class="navbar">
+    <li class="nav-list"><a href="/" class="nav-link">Home</a></li>
+    <% if(locals.user){ %>
+    <li class="nav-list">
+      <a href="/newmsg" class="nav-link">create message</a>
+    </li>
+    <% } %>
     <li class="nav-list"><a href="/signup" class="nav-link">sign-up</a></li>
     <li class="nav-list"><a href="/login" class="nav-link">logIn</a></li>
     <li class="nav-list"><a href="/logout" class="nav-link">logout</a></li>

@@ -7,7 +7,7 @@
     <title><%= pageTitle %></title>
   </head>
   <body>
-    <%- include('partials/nav') %>
+    <%- include('partials/nav') %> <%- include("partials/errors.ejs") %>
     <form action="/signup" method="post">
       <label>
         <p>first name</p>

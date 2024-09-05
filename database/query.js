@@ -49,11 +49,17 @@ async function insertUser(firstName, lastName, username, hashedPass) {
     }
 }
 
+async function checkUserExistance(username) {
+    const { rowCount } = await db.query(`select * from users where username=$1`, [username]);
+    return (rowCount > 0)
+}
+
 module.exports = {
     getMessages,
     deleteMessageById,
     updateMembershipStatus,
     updateAdminStatus,
     insertNewMsg,
-    insertUser
+    insertUser,
+    checkUserExistance
 }

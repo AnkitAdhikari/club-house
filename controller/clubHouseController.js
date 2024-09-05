@@ -1,5 +1,11 @@
 const passport = require("passport");
 const { getMessages, deleteMessageById, updateMembershipStatus, updateAdminStatus, insertNewMsg, insertUser } = require("../database/query");
+const { body, validationResult } = require('express-validator');
+
+const messageValidation = [
+    body('title').trim().notEmpty().withMessage('title cannot be empty'),
+    body('message').trim().notEmpty().withMessage('Message cannot be empty')
+]
 
 const bcrypt = require('bcrypt');
 
@@ -98,14 +104,21 @@ async function deleteMessage(req, res) {
     }
 }
 
-async function postNewMsg(req, res) {
-    const { title, message } = req.body;
-    try {
-        await insertNewMsg(req.user.id, title, message);
-        res.redirect('/');
-    } catch (error) {
-        throw new Error(error);
+const postNewMsg = [
+    messageValidation,
+    async function (req, res) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render('newmsg', { pageTitle: "New Message", errors: errors.array(), });
+        }
+        const { title, message } = req.body;
+        try {
+            await insertNewMsg(req.user.id, title, message);
+            res.redirect('/');
+        } catch (error) {
+            throw new Error(error);
+        }
     }
-}
+]
 
 module.exports = { getHomePage, deleteMessage, getSignUp, postSignUp, getLogIn, postLogIn, logOutUser, getMembership, postMembership, postAdmin, getAdmin, getNewMsg, postNewMsg }

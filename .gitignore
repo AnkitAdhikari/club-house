@@ -1,2 +1,35 @@
-/node_modules
+# Node.js dependencies
+node_modules/
+.pnpm-store/
+
+# Lockfiles from other package managers
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
 .env
+.env.*
+!.env.example
+
+# Editor and OS-specific files
+.DS_Store
+.vscode/
+.idea/
+
+# Test coverage and build outputs (if applicable)
+coverage/
+dist/
+build/
+
+# Temporary files
+*.pid
+*.seed
+*.pid.lock
